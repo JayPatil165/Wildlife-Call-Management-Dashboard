@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Wildlife Incident Dashboard",
+  title: "🐯 Wildlife Incident Dashboard",
   description: "Forest Department - Wildlife Incident Management System",
 };
 

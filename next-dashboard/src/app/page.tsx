@@ -171,12 +171,14 @@ export default function Home() {
       `}</style>
 
       <div className="relative min-h-screen w-full overflow-x-hidden bg-gray-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-        {/* Animated Background Pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] dark:opacity-[0.03]"></div>
+        {/* Animated Background Pattern with texture */}
+        <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03] pointer-events-none" style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23000000" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E)'
+        }}></div>
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-100/40 dark:bg-emerald-500/5 rounded-full blur-3xl -z-10"></div>
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-100/30 dark:bg-teal-500/5 rounded-full blur-3xl -z-10"></div>
       
-      <main className="relative flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 lg:gap-10 lg:p-10 max-w-[1600px] mx-auto overflow-visible">
+      <main className="relative flex flex-1 flex-col gap-3 sm:gap-4 p-3 sm:p-4 md:gap-8 md:p-6 lg:gap-10 lg:p-8 max-w-[1600px] mx-auto overflow-visible">
         {/* Enhanced Header */}
         <div className="flex flex-col gap-4 no-print">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -185,11 +187,11 @@ export default function Home() {
                 onClick={() => setActiveTab('overview')}
                 className="p-2 md:p-3 bg-gradient-to-br from-emerald-500 to-teal-600 dark:from-emerald-600 dark:to-teal-700 rounded-xl md:rounded-2xl shadow-lg shadow-emerald-500/30 dark:shadow-emerald-500/20 transform hover:scale-105 transition-transform cursor-pointer flex-shrink-0"
               >
-                <span className="text-2xl md:text-3xl">🦁</span>
+                <span className="text-2xl md:text-3xl">🐯</span>
               </button>
               <div className="min-w-0">
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <h1 className="text-2xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
+                  <h1 className="text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
                     Wildlife Incident Dashboard
                   </h1>
                   <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100 text-sm font-semibold">
@@ -275,19 +277,29 @@ export default function Home() {
           </div>
         )}
 
-        {/* Filter Panel - Above KPI Cards */}
+        {/* Key Metrics & Filters Section */}
         {data.length > 0 && (
-          <div className="relative z-40 no-print">
-            <FilterPanel data={data} onFilterChange={setFilteredData} />
-          </div>
-        )}
-
-        {/* Enhanced Stats Cards */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 relative z-10 no-print">
-          <Card className="group relative overflow-hidden border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 hover:border-emerald-500 dark:hover:border-emerald-600">
-            <div className="absolute inset-0 bg-emerald-50 dark:bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <Card className="relative z-10 border-2 border-emerald-200 dark:border-emerald-900/30 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-lg no-print">
+            <CardHeader className="border-b border-emerald-100 dark:border-emerald-900/30">
+              <CardTitle className="flex items-center gap-3 text-xl md:text-2xl font-bold">
+                <div className="p-2 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-lg shadow-md">
+                  <Filter className="h-5 w-5 text-white" />
+                </div>
+                Key Metrics & Filters
+              </CardTitle>
+              <CardDescription className="text-base mt-2">Filter data and monitor key performance indicators</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-4 sm:pt-6 px-3 sm:px-4 md:px-6">
+              <div className="border border-emerald-200/50 dark:border-emerald-700/30 rounded-lg p-3 sm:p-4 bg-gradient-to-br from-emerald-50/40 to-transparent dark:from-emerald-950/20 dark:to-transparent hover:border-emerald-300/80 dark:hover:border-emerald-600/50 transition-colors">
+                <FilterPanel data={data} onFilterChange={setFilteredData} />
+              </div>
+              
+              {/* Enhanced Stats Cards Grid */}
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mt-6">
+          <Card className="group relative overflow-hidden border border-emerald-200/50 dark:border-emerald-700/30 bg-gradient-to-br from-emerald-50/60 to-emerald-50/30 dark:from-emerald-950/20 dark:to-emerald-900/10 dark:backdrop-blur-sm shadow-sm hover:shadow-lg hover:border-emerald-400 dark:hover:border-emerald-500/60 transition-all duration-300">
+            <div className="absolute inset-0 bg-emerald-50/40 dark:bg-emerald-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-              <CardTitle className="text-sm font-semibold text-gray-700 dark:text-slate-300">
+              <CardTitle className="text-lg md:text-xl font-bold text-emerald-700 dark:text-emerald-300">
                 Total Incidents
               </CardTitle>
               <div className="h-12 w-12 rounded-xl bg-emerald-600 dark:bg-gradient-to-br dark:from-emerald-600 dark:to-teal-700 flex items-center justify-center shadow-md transition-all duration-300 relative overflow-hidden">
@@ -298,7 +310,7 @@ export default function Home() {
               </div>
             </CardHeader>
             <CardContent className="relative z-10">
-              <div className="text-4xl font-bold text-gray-900 dark:text-emerald-400 transition-all duration-300 group-hover:opacity-0">
+              <div className="text-4xl font-bold text-emerald-700 dark:text-emerald-300 transition-all duration-300 group-hover:opacity-0">
                 {stats.totalIncidents.toLocaleString()}
               </div>
               
@@ -322,10 +334,9 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="group relative overflow-hidden border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 hover:border-blue-500 dark:hover:border-blue-600">
-            <div className="absolute inset-0 bg-blue-50 dark:bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <Card className="group relative overflow-hidden border border-blue-200/50 dark:border-blue-700/30 bg-gradient-to-br from-blue-50/85 to-blue-50/60 dark:from-blue-950/60 dark:to-blue-900/40 dark:backdrop-blur-sm shadow-sm hover:shadow-lg hover:border-blue-400 dark:hover:border-blue-500/60 transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-              <CardTitle className="text-sm font-semibold text-gray-700 dark:text-slate-300">
+              <CardTitle className="text-lg md:text-xl font-bold text-blue-700 dark:text-blue-300">
                 Wildlife Types
               </CardTitle>
               <div className="h-12 w-12 rounded-xl bg-blue-600 dark:bg-gradient-to-br dark:from-blue-600 dark:to-cyan-700 flex items-center justify-center shadow-md transition-all duration-300 relative overflow-hidden">
@@ -336,7 +347,7 @@ export default function Home() {
               </div>
             </CardHeader>
             <CardContent className="relative z-10">
-              <div className="text-4xl font-bold text-gray-900 dark:text-blue-400 transition-all duration-300 group-hover:opacity-0">
+              <div className="text-4xl font-bold text-blue-700 dark:text-blue-300 transition-all duration-300 group-hover:opacity-0">
                 {stats.uniqueWildlife}
               </div>
               
@@ -359,10 +370,9 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="group relative overflow-hidden border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 hover:border-purple-500 dark:hover:border-purple-600">
-            <div className="absolute inset-0 bg-purple-50 dark:bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <Card className="group relative overflow-hidden border border-purple-200/50 dark:border-purple-700/30 bg-gradient-to-br from-purple-50/85 to-purple-50/60 dark:from-purple-950/60 dark:to-purple-900/40 dark:backdrop-blur-sm shadow-sm hover:shadow-lg hover:border-purple-400 dark:hover:border-purple-500/60 transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-              <CardTitle className="text-sm font-semibold text-gray-700 dark:text-slate-300">
+              <CardTitle className="text-lg md:text-xl font-bold text-purple-700 dark:text-purple-300">
                 Talukas Covered
               </CardTitle>
               <div className="h-12 w-12 rounded-xl bg-purple-600 dark:bg-gradient-to-br dark:from-purple-600 dark:to-pink-700 flex items-center justify-center shadow-md transition-all duration-300 relative overflow-hidden">
@@ -373,7 +383,7 @@ export default function Home() {
               </div>
             </CardHeader>
             <CardContent className="relative z-10">
-              <div className="text-4xl font-bold text-gray-900 dark:text-purple-400 transition-all duration-300 group-hover:opacity-0">
+              <div className="text-4xl font-bold text-purple-700 dark:text-purple-300 transition-all duration-300 group-hover:opacity-0">
                 {stats.uniqueTalukas}
               </div>
               
@@ -394,10 +404,9 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="group relative overflow-hidden border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-sm hover:shadow-lg transition-all duration-300 hover:border-orange-500 dark:hover:border-orange-600">
-            <div className="absolute inset-0 bg-orange-50 dark:bg-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <Card className="group relative overflow-hidden border border-orange-200/50 dark:border-orange-700/30 bg-gradient-to-br from-orange-50/85 to-orange-50/60 dark:from-orange-950/60 dark:to-orange-900/40 dark:backdrop-blur-sm shadow-sm hover:shadow-lg hover:border-orange-400 dark:hover:border-orange-500/60 transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-              <CardTitle className="text-sm font-semibold text-gray-700 dark:text-slate-300">
+              <CardTitle className="text-lg md:text-xl font-bold text-orange-700 dark:text-orange-300">
                 Villages
               </CardTitle>
               <div className="h-12 w-12 rounded-xl bg-orange-600 dark:bg-gradient-to-br dark:from-orange-600 dark:to-amber-700 flex items-center justify-center shadow-md transition-all duration-300 relative overflow-hidden">
@@ -408,7 +417,7 @@ export default function Home() {
               </div>
             </CardHeader>
             <CardContent className="relative z-10">
-              <div className="text-4xl font-bold text-gray-900 dark:text-orange-400 transition-all duration-300 group-hover:opacity-0">
+              <div className="text-4xl font-bold text-orange-700 dark:text-orange-300 transition-all duration-300 group-hover:opacity-0">
                 {stats.uniqueVillages}
               </div>
               
@@ -428,7 +437,10 @@ export default function Home() {
               </p>
             </CardContent>
           </Card>
-        </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Enhanced Main Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -460,15 +472,15 @@ export default function Home() {
 
           <TabsContent value="overview" className="space-y-6 mt-0">
             {/* Quick Stats Summary */}
-            <div className="grid gap-6 md:grid-cols-3">
-              <Card className="border border-gray-200 dark:border-slate-700 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/30 dark:to-purple-900/30 shadow-md hover:shadow-lg transition-all duration-300">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-base text-purple-900 dark:text-purple-200">
-                    <Calendar className="h-5 w-5" />
+            <div className="grid gap-3 sm:gap-4 md:grid-cols-3">
+              <Card className="border border-purple-200/50 dark:border-purple-700/30 bg-gradient-to-br from-purple-50/90 to-purple-50/70 dark:from-purple-950/70 dark:to-purple-900/50 shadow-md hover:shadow-2xl hover:border-purple-400 dark:hover:border-purple-500/60 hover:from-purple-100/85 hover:to-purple-100/70 dark:hover:from-purple-900/80 dark:hover:to-purple-800/60 hover:scale-[1.03] transition-all duration-300">
+                <CardHeader className="pb-1 px-3 md:px-4">
+                  <CardTitle className="flex items-center gap-2 text-sm md:text-base font-bold text-purple-700 dark:text-purple-300">
+                    <Calendar className="h-4 w-4" />
                     Most Active Month
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-3 md:px-4 py-2">
                   {(() => {
                     const monthCounts = filteredData.reduce((acc, item) => {
                       const date = parseIncidentDate(item.Timestamp)
@@ -481,25 +493,25 @@ export default function Home() {
                     const mostActive = Object.entries(monthCounts).sort((a, b) => b[1] - a[1])[0]
                     return mostActive ? (
                       <>
-                        <div className="text-3xl font-bold text-purple-700 dark:text-purple-300">{mostActive[0]}</div>
-                        <p className="text-sm text-purple-600 dark:text-purple-400 mt-1">{mostActive[1]} incidents</p>
+                        <div className="text-2xl md:text-3xl font-bold text-purple-700 dark:text-purple-300">{mostActive[0]}</div>
+                        <p className="text-xs md:text-sm text-purple-600 dark:text-purple-400 mt-1 font-medium">{mostActive[1]} incidents</p>
                       </>
                     ) : <div className="text-2xl text-purple-400">No data</div>
                   })()}
                 </CardContent>
               </Card>
 
-              <Card className="border border-gray-200 dark:border-slate-700 bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-950/30 dark:to-teal-900/30 shadow-md hover:shadow-lg transition-all duration-300">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-base text-teal-900 dark:text-teal-200">
-                    <TrendingUp className="h-5 w-5" />
+              <Card className="border border-teal-200/50 dark:border-teal-700/30 bg-gradient-to-br from-teal-50/90 to-teal-50/70 dark:from-teal-950/70 dark:to-teal-900/50 shadow-md hover:shadow-2xl hover:border-teal-400 dark:hover:border-teal-500/60 hover:from-teal-100/85 hover:to-teal-100/70 dark:hover:from-teal-900/80 dark:hover:to-teal-800/60 hover:scale-[1.03] transition-all duration-300">
+                <CardHeader className="pb-1 px-3 md:px-4">
+                  <CardTitle className="flex items-center gap-2 text-sm md:text-base font-bold text-teal-700 dark:text-teal-300">
+                    <TrendingUp className="h-4 w-4" />
                     Average Per Day
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-3 md:px-4 py-2">
                   {(() => {
                     if (filteredData.length === 0) return <div className="text-2xl text-teal-400">No data</div>
-                    const dates = filteredData.map(d => parseIncidentDate(d.Timestamp)).filter((d): d is Date => d !== null && !isNaN(d.getTime())).sort((a, b) => a.getTime() - b.getTime())
+                    const dates = filteredData.map(d => parseIncidentDate(d.Timestamp)).filter(d => d && !isNaN(d.getTime())).sort((a, b) => a.getTime() - b.getTime())
                     if (dates.length === 0) return <div className="text-2xl text-teal-400">No data</div>
                     const minDate = dates[0]
                     const maxDate = dates[dates.length - 1]
@@ -507,22 +519,22 @@ export default function Home() {
                     const avgPerDay = (filteredData.length / daysDiff).toFixed(1)
                     return (
                       <>
-                        <div className="text-3xl font-bold text-teal-700 dark:text-teal-300">{avgPerDay}</div>
-                        <p className="text-sm text-teal-600 dark:text-teal-400 mt-1">incidents/day</p>
+                        <div className="text-2xl md:text-3xl font-bold text-teal-700 dark:text-teal-300">{avgPerDay}</div>
+                        <p className="text-xs md:text-sm text-teal-600 dark:text-teal-400 mt-1 font-medium">incidents/day</p>
                       </>
                     )
                   })()}
                 </CardContent>
               </Card>
 
-              <Card className="border border-gray-200 dark:border-slate-700 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-950/30 dark:to-amber-900/30 shadow-md hover:shadow-lg transition-all duration-300">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-base text-amber-900 dark:text-amber-200">
-                    <Clock className="h-5 w-5" />
+              <Card className="border border-amber-200/50 dark:border-amber-700/30 bg-gradient-to-br from-amber-50/90 to-amber-50/70 dark:from-amber-950/70 dark:to-amber-900/50 shadow-md hover:shadow-2xl hover:border-amber-400 dark:hover:border-amber-500/60 hover:from-amber-100/85 hover:to-amber-100/70 dark:hover:from-amber-900/80 dark:hover:to-amber-800/60 hover:scale-[1.03] transition-all duration-300">
+                <CardHeader className="pb-1">
+                  <CardTitle className="flex items-center gap-2 text-sm md:text-base font-bold text-amber-700 dark:text-amber-300">
+                    <Clock className="h-4 w-4" />
                     Peak Hours
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-2">
                   {(() => {
                     const hourCounts = filteredData.reduce((acc, item) => {
                       const date = parseIncidentDate(item.Timestamp)
@@ -535,7 +547,7 @@ export default function Home() {
                     const peakHour = Object.entries(hourCounts).sort((a, b) => b[1] - a[1])[0]
                     return peakHour ? (
                       <>
-                        <div className="text-3xl font-bold text-amber-700 dark:text-amber-300">
+                        <div className="text-2xl md:text-3xl font-bold text-amber-700 dark:text-amber-300">
                           {(() => {
                             const hour = parseInt(peakHour[0])
                             const hour12 = hour % 12 || 12
@@ -543,7 +555,7 @@ export default function Home() {
                             return `${hour12}:00 ${ampm}`
                           })()}
                         </div>
-                        <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">{peakHour[1]} incidents</p>
+                        <p className="text-xs md:text-sm text-amber-600 dark:text-amber-400 mt-1 font-medium">{peakHour[1]} incidents</p>
                       </>
                     ) : <div className="text-2xl text-amber-400">No data</div>
                   })()}
@@ -552,9 +564,9 @@ export default function Home() {
             </div>
 
             {/* Trend Indicators */}
-            <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 shadow-md">
+            <Card className="border border-gray-200 dark:border-slate-700 bg-gradient-to-br from-emerald-50/40 via-teal-50/30 to-cyan-50/20 dark:from-emerald-950/30 dark:via-slate-800/50 dark:to-slate-900/40 shadow-md hover:shadow-lg transition-all duration-300">
               <CardHeader className="border-b border-gray-200 dark:border-slate-700">
-                <CardTitle className="flex items-center gap-3">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-2xl font-bold">
                   <div className="p-2 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-lg shadow-md">
                     <TrendingUp className="h-5 w-5 text-white" />
                   </div>
@@ -562,11 +574,12 @@ export default function Home() {
                 </CardTitle>
                 <CardDescription>Compare current activity with previous periods</CardDescription>
               </CardHeader>
-              <CardContent className="p-6">
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <CardContent className="px-3 md:px-4 py-3">
+                <div className="grid gap-2 sm:gap-3 md:grid-cols-2 lg:grid-cols-4">
                   {/* Week Comparison */}
-                  <div className="p-5 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-950/30 dark:to-blue-900/20 border border-blue-200 dark:border-blue-900/30 hover:shadow-md transition-all">
-                    <h4 className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-3 uppercase tracking-wide">This Week vs Last Week</h4>
+                  <Card className="border border-blue-200/50 dark:border-blue-700/30 bg-gradient-to-br from-blue-50/90 to-blue-50/70 dark:from-blue-950/70 dark:to-blue-900/50 rounded-lg shadow-md hover:shadow-2xl hover:border-blue-400 dark:hover:border-blue-500/60 hover:from-blue-100/85 hover:to-blue-100/70 dark:hover:from-blue-900/80 dark:hover:to-blue-800/60 hover:scale-[1.03] transition-all duration-300">
+                    <div className="p-2 sm:p-3 rounded-lg">
+                      <h4 className="text-xs sm:text-sm md:text-base font-bold text-blue-700 dark:text-blue-300 mb-2">This Week vs Last Week</h4>
                     {(() => {
                       const now = new Date()
                       const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
@@ -587,12 +600,12 @@ export default function Home() {
                       const isNeutral = Math.abs(change) < 1
                       
                       return (
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <div className="flex items-baseline gap-2">
-                            <div className="text-3xl font-bold text-blue-700 dark:text-blue-300">{thisWeek}</div>
-                            <div className="text-xs text-blue-600/70 dark:text-blue-400/70">incidents</div>
+                            <div className="text-3xl md:text-4xl font-bold text-blue-700 dark:text-blue-300">{thisWeek}</div>
+                            <div className="text-xs md:text-sm text-blue-600/70 dark:text-blue-400/70 font-medium">incidents</div>
                           </div>
-                          <div className="text-xs text-blue-600 dark:text-blue-400">vs {lastWeek} last week</div>
+                          <div className="text-sm text-blue-600 dark:text-blue-400">vs {lastWeek} last week</div>
                           <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
                             isNeutral ? 'bg-gray-200 dark:bg-slate-600' :
                             isPositive ? 'bg-red-500/20 dark:bg-red-900/40 border border-red-500/30' : 'bg-green-500/20 dark:bg-green-900/40 border border-green-500/30'
@@ -610,11 +623,13 @@ export default function Home() {
                         </div>
                       )
                     })()}
-                  </div>
+                    </div>
+                  </Card>
 
                   {/* Month Comparison */}
-                  <div className="p-5 rounded-lg bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/30 dark:to-purple-900/20 border border-purple-200 dark:border-purple-900/30 hover:shadow-md transition-all">
-                    <h4 className="text-xs font-semibold text-purple-700 dark:text-purple-400 mb-3 uppercase tracking-wide">This Month vs Last Month</h4>
+                  <Card className="border border-purple-200/50 dark:border-purple-700/30 bg-gradient-to-br from-purple-50/90 to-purple-50/70 dark:from-purple-950/70 dark:to-purple-900/50 rounded-lg shadow-md hover:shadow-2xl hover:border-purple-400 dark:hover:border-purple-500/60 hover:from-purple-100/85 hover:to-purple-100/70 dark:hover:from-purple-900/80 dark:hover:to-purple-800/60 hover:scale-[1.03] transition-all duration-300">
+                    <div className="p-2 sm:p-3 rounded-lg">
+                      <h4 className="text-xs sm:text-sm md:text-base font-bold text-purple-700 dark:text-purple-300 mb-2">This Month vs Last Month</h4>
                     {(() => {
                       const now = new Date()
                       const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1)
@@ -635,12 +650,12 @@ export default function Home() {
                       const isNeutral = Math.abs(change) < 1
                       
                       return (
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <div className="flex items-baseline gap-2">
-                            <div className="text-3xl font-bold text-purple-700 dark:text-purple-300">{thisMonth}</div>
-                            <div className="text-xs text-purple-600/70 dark:text-purple-400/70">incidents</div>
+                            <div className="text-3xl md:text-4xl font-bold text-purple-700 dark:text-purple-300">{thisMonth}</div>
+                            <div className="text-xs md:text-sm text-purple-600/70 dark:text-purple-400/70 font-medium">incidents</div>
                           </div>
-                          <div className="text-xs text-purple-600 dark:text-purple-400">vs {lastMonth} last month</div>
+                          <div className="text-sm text-purple-600 dark:text-purple-400">vs {lastMonth} last month</div>
                           <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
                             isNeutral ? 'bg-gray-200 dark:bg-slate-600' :
                             isPositive ? 'bg-red-500/20 dark:bg-red-900/40 border border-red-500/30' : 'bg-green-500/20 dark:bg-green-900/40 border border-green-500/30'
@@ -658,12 +673,14 @@ export default function Home() {
                         </div>
                       )
                     })()}
-                  </div>
+                    </div>
+                  </Card>
 
                   {/* Year Comparison */}
-                  <div className="p-5 rounded-lg bg-gradient-to-br from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200 dark:border-emerald-900/30 hover:shadow-md transition-all">
-                    <h4 className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mb-3 uppercase tracking-wide">This Year vs Last Year</h4>
-                    {(() => {
+                  <Card className="border border-purple-200/50 dark:border-purple-700/30 bg-gradient-to-br from-purple-50/90 to-purple-50/70 dark:from-purple-950/70 dark:to-purple-900/50 rounded-lg shadow-md hover:shadow-2xl hover:border-purple-400 dark:hover:border-purple-500/60 hover:from-purple-100/85 hover:to-purple-100/70 dark:hover:from-purple-900/80 dark:hover:to-purple-800/60 hover:scale-[1.03] transition-all duration-300">
+                    <div className="p-2 sm:p-3 rounded-lg">
+                      <h4 className="text-xs sm:text-sm md:text-base font-bold text-purple-700 dark:text-purple-300 mb-2">This Year vs Last Year</h4>
+                      {(() => {
                       const now = new Date()
                       const thisYearStart = new Date(now.getFullYear(), 0, 1)
                       const lastYearStart = new Date(now.getFullYear() - 1, 0, 1)
@@ -684,12 +701,12 @@ export default function Home() {
                       const isNeutral = Math.abs(change) < 1
                       
                       return (
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <div className="flex items-baseline gap-2">
-                            <div className="text-3xl font-bold text-emerald-700 dark:text-emerald-300">{thisYear}</div>
-                            <div className="text-xs text-emerald-600/70 dark:text-emerald-400/70">incidents</div>
+                            <div className="text-3xl md:text-4xl font-bold text-purple-700 dark:text-purple-300">{thisYear}</div>
+                            <div className="text-xs md:text-sm text-purple-600/70 dark:text-purple-400/70 font-medium">incidents</div>
                           </div>
-                          <div className="text-xs text-emerald-600 dark:text-emerald-400">vs {lastYear} last year</div>
+                          <div className="text-sm text-purple-600 dark:text-purple-400">vs {lastYear} last year</div>
                           <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
                             isNeutral ? 'bg-gray-200 dark:bg-slate-600' :
                             isPositive ? 'bg-red-500/20 dark:bg-red-900/40 border border-red-500/30' : 'bg-green-500/20 dark:bg-green-900/40 border border-green-500/30'
@@ -707,12 +724,14 @@ export default function Home() {
                         </div>
                       )
                     })()}
-                  </div>
+                    </div>
+                  </Card>
 
                   {/* 30-Day Average */}
-                  <div className="p-5 rounded-lg bg-gradient-to-br from-orange-50 to-orange-100/50 dark:from-orange-950/30 dark:to-orange-900/20 border border-orange-200 dark:border-orange-900/30 hover:shadow-md transition-all">
-                    <h4 className="text-xs font-semibold text-orange-700 dark:text-orange-400 mb-3 uppercase tracking-wide">30-Day Moving Average</h4>
-                    {(() => {
+                  <Card className="border border-orange-200/50 dark:border-orange-700/30 bg-gradient-to-br from-orange-50/90 to-orange-50/70 dark:from-orange-950/70 dark:to-orange-900/50 rounded-lg shadow-md hover:shadow-2xl hover:border-orange-400 dark:hover:border-orange-500/60 hover:from-orange-100/85 hover:to-orange-100/70 dark:hover:from-orange-900/80 dark:hover:to-orange-800/60 hover:scale-[1.03] transition-all duration-300">
+                    <div className="p-2 sm:p-3 rounded-lg">
+                      <h4 className="text-xs sm:text-sm md:text-base font-bold text-orange-700 dark:text-orange-300 mb-2">30-Day Moving Average Trend</h4>
+                      {(() => {
                       const now = new Date()
                       const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
                       const sixtyDaysAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000)
@@ -734,12 +753,12 @@ export default function Home() {
                       const isNeutral = Math.abs(change) < 1
                       
                       return (
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <div className="flex items-baseline gap-2">
-                            <div className="text-3xl font-bold text-orange-700 dark:text-orange-300">{avgLast30}</div>
-                            <div className="text-xs text-orange-600/70 dark:text-orange-400/70">per day</div>
+                            <div className="text-3xl md:text-4xl font-bold text-orange-700 dark:text-orange-300">{avgLast30}</div>
+                            <div className="text-xs md:text-sm text-orange-600/70 dark:text-orange-400/70 font-medium">per day</div>
                           </div>
-                          <div className="text-xs text-orange-600 dark:text-orange-400">vs {avgPrev30} previous period</div>
+                          <div className="text-sm text-orange-600 dark:text-orange-400">vs {avgPrev30} previous period</div>
                           <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
                             isNeutral ? 'bg-gray-200 dark:bg-slate-600' :
                             isPositive ? 'bg-red-500/20 dark:bg-red-900/40 border border-red-500/30' : 'bg-green-500/20 dark:bg-green-900/40 border border-green-500/30'
@@ -757,15 +776,16 @@ export default function Home() {
                         </div>
                       )
                     })()}
-                  </div>
+                    </div>
+                  </Card>
                 </div>
               </CardContent>
             </Card>
 
             {/* Geographical Distribution Map */}
-            <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 shadow-md">
+            <Card className="border border-gray-200 dark:border-slate-700 bg-gradient-to-br from-emerald-50/50 via-teal-50/40 to-cyan-50/30 dark:from-teal-950/40 dark:via-slate-800/50 dark:to-slate-900/40 shadow-md hover:shadow-lg transition-all duration-300">
               <CardHeader className="border-b border-gray-200 dark:border-slate-700">
-                <CardTitle className="flex items-center gap-3">
+                <CardTitle className="flex items-center gap-3 text-lg md:text-2xl font-bold">
                   <div className="p-2 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-lg shadow-md">
                     <MapPin className="h-5 w-5 text-white" />
                   </div>
@@ -773,16 +793,16 @@ export default function Home() {
                 </CardTitle>
                 <CardDescription>Interactive map showing incident locations across talukas</CardDescription>
               </CardHeader>
-              <CardContent className="p-4">
+              <CardContent className="px-3 sm:px-4 md:px-6 py-4 sm:py-5">
                 {isMounted && <GeographicalMap data={filteredData} />}
               </CardContent>
             </Card>
 
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
               {/* Recent Activity Feed */}
-              <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 shadow-md">
+              <Card className="border border-gray-200 dark:border-slate-700 bg-gradient-to-br from-blue-50/50 via-cyan-50/40 to-indigo-50/30 dark:from-blue-950/40 dark:via-slate-800/50 dark:to-slate-900/40 shadow-md hover:shadow-lg transition-all duration-300">
                 <CardHeader className="border-b border-gray-200 dark:border-slate-700">
-                  <CardTitle className="flex items-center gap-3">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-2xl font-bold">
                     <div className="p-2 bg-gradient-to-br from-blue-600 to-cyan-700 rounded-lg shadow-md">
                       <Activity className="h-5 w-5 text-white" />
                     </div>
@@ -854,9 +874,9 @@ export default function Home() {
               </Card>
 
               {/* Time-based Analytics */}
-              <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 shadow-md">
+              <Card className="border border-gray-200 dark:border-slate-700 bg-gradient-to-br from-indigo-50/50 via-blue-50/40 to-purple-50/30 dark:from-indigo-950/40 dark:via-slate-800/50 dark:to-slate-900/40 shadow-md hover:shadow-lg transition-all duration-300">
                 <CardHeader className="border-b border-gray-200 dark:border-slate-700">
-                  <CardTitle className="flex items-center gap-3">
+                  <CardTitle className="flex items-center gap-3 text-lg md:text-2xl font-bold">
                     <div className="p-2 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-lg shadow-md">
                       <Clock className="h-5 w-5 text-white" />
                     </div>
@@ -864,7 +884,7 @@ export default function Home() {
                   </CardTitle>
                   <CardDescription>Day vs Night patterns (all data) • Hourly activity (last 24 hours)</CardDescription>
                 </CardHeader>
-                <CardContent className="p-6">
+                <CardContent className="px-3 sm:px-4 md:px-6 py-4 sm:py-5">
                   {(() => {
                     // Calculate day/night for ALL data (total)
                     const allDayIncidents = filteredData.filter(d => {
@@ -1034,8 +1054,7 @@ export default function Home() {
             </div>
           </TabsContent>
 
-          <TabsContent value="charts" className="space-y-6 mt-0">
-            {/* Chart Display */}
+          <TabsContent value="charts" className="space-y-4 mt-0">
             <div ref={chartDisplayRef}>
               <ChartDisplay 
                 chartType={activeChart} 
@@ -1044,27 +1063,22 @@ export default function Home() {
             </div>
 
             {/* Chart Selector */}
-            <ChartSelector 
-              activeChart={activeChart} 
-              onChartChange={setActiveChart} 
-            />
+            <div className="mt-4 w-full">
+              <ChartSelector 
+                activeChart={activeChart} 
+                onChartChange={setActiveChart} 
+              />
+            </div>
           </TabsContent>
 
           <TabsContent value="raw-data" className="space-y-6 mt-0">
-            <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-md">
-              <CardHeader className="bg-gray-50 dark:bg-slate-800/70 border-b border-gray-200 dark:border-slate-700">
-                <CardTitle className="flex items-center gap-3 text-2xl">
-                  <div className="p-2 bg-emerald-600 dark:bg-gradient-to-br dark:from-emerald-600 dark:to-teal-700 rounded-lg shadow-md">
-                    <Database className="h-6 w-6 text-white" />
-                  </div>
-                  <span className="text-gray-900 dark:text-white">
-                    Raw Incident Data
-                  </span>
-                </CardTitle>
-                <CardDescription className="text-base mt-2 dark:text-slate-400">
-                  Complete dataset of wildlife incidents with pagination and search capabilities.
-                </CardDescription>
-              </CardHeader>
+            <div className="text-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center justify-center gap-3">
+                <Database className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                Raw Incident Data
+              </h2>
+            </div>
+            <Card className="border border-gray-200 dark:border-slate-700 bg-gradient-to-br from-slate-50/40 via-blue-50/30 to-cyan-50/20 dark:from-slate-800/40 dark:via-slate-800/50 dark:to-slate-900/40 dark:backdrop-blur-sm shadow-md">
               <CardContent className="p-8">
                 <DataTable 
                   data={[...filteredData].sort((a, b) => {
