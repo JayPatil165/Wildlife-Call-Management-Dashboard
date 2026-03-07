@@ -499,7 +499,7 @@ export default function Home() {
                 <CardContent>
                   {(() => {
                     if (filteredData.length === 0) return <div className="text-2xl text-teal-400">No data</div>
-                    const dates = filteredData.map(d => parseIncidentDate(d.Timestamp)).filter(d => d && !isNaN(d.getTime())).sort((a, b) => a.getTime() - b.getTime())
+                    const dates = filteredData.map(d => parseIncidentDate(d.Timestamp)).filter((d): d is Date => d !== null && !isNaN(d.getTime())).sort((a, b) => a.getTime() - b.getTime())
                     if (dates.length === 0) return <div className="text-2xl text-teal-400">No data</div>
                     const minDate = dates[0]
                     const maxDate = dates[dates.length - 1]
