@@ -28,6 +28,18 @@ const GeographicalMap = dynamic(
   }
 )
 
+// Get region from environment variable
+const DEFAULT_REGION = (process.env.NEXT_PUBLIC_DEFAULT_REGION || 'sangli') as 'sangli' | 'kolhapur'
+
+// Format region name for display
+const getRegionLabel = (region: string): string => {
+  const labels: Record<string, string> = {
+    sangli: 'Sangli',
+    kolhapur: 'Kolhapur',
+  }
+  return labels[region] || region
+}
+
 export default function Home() {
   const [data, setData] = useState<IncidentData[]>([])
   const [filteredData, setFilteredData] = useState<IncidentData[]>([])
@@ -45,8 +57,9 @@ export default function Home() {
     setLoading(true)
     setError(null)
     try {
-      const incidentData = await fetchIncidentData()
+      const incidentData = await fetchIncidentData(DEFAULT_REGION)
       console.log('Loaded incident data:', {
+        region: DEFAULT_REGION,
         total: incidentData.length,
         sample: incidentData[0],
         timestamps: incidentData.map(d => d.Timestamp).slice(0, 5)
@@ -175,9 +188,15 @@ export default function Home() {
                 <span className="text-2xl md:text-3xl">🦁</span>
               </button>
               <div className="min-w-0">
-                <h1 className="text-2xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent truncate">
-                  Wildlife Incident Dashboard
-                </h1>
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <h1 className="text-2xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
+                    Wildlife Incident Dashboard
+                  </h1>
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100 text-sm font-semibold">
+                    <MapPin className="w-4 h-4" />
+                    {getRegionLabel(DEFAULT_REGION)}
+                  </span>
+                </div>
                 <p className="text-xs md:text-sm text-gray-600 dark:text-slate-400 font-medium mt-1 flex items-center gap-2">
                   <span className="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
                   <span className="hidden sm:inline">Forest Department · Real-time Monitoring & Analytics</span>

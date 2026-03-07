@@ -1,19 +1,16 @@
 'use server'
 
 import { google } from 'googleapis'
-import fs from 'fs'
-import path from 'path'
 import { IncidentData } from '@/types'
+import { getGoogleCredentials, getSheetId, Region } from '@/lib/config'
 
-export async function fetchIncidentData(): Promise<IncidentData[]> {
+export async function fetchIncidentData(region: Region = 'sangli'): Promise<IncidentData[]> {
   try {
-    // Read credentials
-    const credentialsPath = path.join(process.cwd(), 'credentials.json')
-    const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'))
+    // Get credentials from environment variables
+    const credentials = getGoogleCredentials()
 
-    // Read sheet ID from sheetid.txt
-    const sheetIdPath = path.join(process.cwd(), 'sheetid.txt')
-    const sheetId = fs.readFileSync(sheetIdPath, 'utf8').trim()
+    // Get sheet ID for the specified region
+    const sheetId = getSheetId(region)
 
     // Authenticate with Google Sheets
     const auth = new google.auth.GoogleAuth({
