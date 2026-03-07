@@ -471,8 +471,8 @@ export default function Home() {
                 <CardContent>
                   {(() => {
                     const monthCounts = filteredData.reduce((acc, item) => {
-                      const date = new Date(item.Timestamp)
-                      if (!isNaN(date.getTime())) {
+                      const date = parseIncidentDate(item.Timestamp)
+                      if (date && !isNaN(date.getTime())) {
                         const monthYear = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`
                         acc[monthYear] = (acc[monthYear] || 0) + 1
                       }
@@ -499,10 +499,10 @@ export default function Home() {
                 <CardContent>
                   {(() => {
                     if (filteredData.length === 0) return <div className="text-2xl text-teal-400">No data</div>
-                    const dates = filteredData.map(d => new Date(d.Timestamp)).filter(d => !isNaN(d.getTime()))
+                    const dates = filteredData.map(d => parseIncidentDate(d.Timestamp)).filter(d => d && !isNaN(d.getTime())).sort((a, b) => a.getTime() - b.getTime())
                     if (dates.length === 0) return <div className="text-2xl text-teal-400">No data</div>
-                    const minDate = new Date(Math.min(...dates.map(d => d.getTime())))
-                    const maxDate = new Date(Math.max(...dates.map(d => d.getTime())))
+                    const minDate = dates[0]
+                    const maxDate = dates[dates.length - 1]
                     const daysDiff = Math.max(1, Math.ceil((maxDate.getTime() - minDate.getTime()) / (1000 * 60 * 60 * 24)))
                     const avgPerDay = (filteredData.length / daysDiff).toFixed(1)
                     return (
@@ -525,8 +525,8 @@ export default function Home() {
                 <CardContent>
                   {(() => {
                     const hourCounts = filteredData.reduce((acc, item) => {
-                      const date = new Date(item.Timestamp)
-                      if (!isNaN(date.getTime())) {
+                      const date = parseIncidentDate(item.Timestamp)
+                      if (date && !isNaN(date.getTime())) {
                         const hour = date.getHours()
                         acc[hour] = (acc[hour] || 0) + 1
                       }
@@ -573,13 +573,13 @@ export default function Home() {
                       const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000)
                       
                       const thisWeek = filteredData.filter(d => {
-                        const date = new Date(d.Timestamp)
-                        return !isNaN(date.getTime()) && date >= weekAgo
+                        const date = parseIncidentDate(d.Timestamp)
+                        return date && !isNaN(date.getTime()) && date >= weekAgo
                       }).length
                       
                       const lastWeek = filteredData.filter(d => {
-                        const date = new Date(d.Timestamp)
-                        return !isNaN(date.getTime()) && date >= twoWeeksAgo && date < weekAgo
+                        const date = parseIncidentDate(d.Timestamp)
+                        return date && !isNaN(date.getTime()) && date >= twoWeeksAgo && date < weekAgo
                       }).length
                       
                       const change = lastWeek === 0 ? (thisWeek > 0 ? 100 : 0) : ((thisWeek - lastWeek) / lastWeek * 100)
@@ -621,13 +621,13 @@ export default function Home() {
                       const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1)
                       
                       const thisMonth = filteredData.filter(d => {
-                        const date = new Date(d.Timestamp)
-                        return !isNaN(date.getTime()) && date >= thisMonthStart
+                        const date = parseIncidentDate(d.Timestamp)
+                        return date && !isNaN(date.getTime()) && date >= thisMonthStart
                       }).length
                       
                       const lastMonth = filteredData.filter(d => {
-                        const date = new Date(d.Timestamp)
-                        return !isNaN(date.getTime()) && date >= lastMonthStart && date < thisMonthStart
+                        const date = parseIncidentDate(d.Timestamp)
+                        return date && !isNaN(date.getTime()) && date >= lastMonthStart && date < thisMonthStart
                       }).length
                       
                       const change = lastMonth === 0 ? (thisMonth > 0 ? 100 : 0) : ((thisMonth - lastMonth) / lastMonth * 100)
@@ -670,13 +670,13 @@ export default function Home() {
                       const lastYearEnd = new Date(now.getFullYear(), 0, 1)
                       
                       const thisYear = filteredData.filter(d => {
-                        const date = new Date(d.Timestamp)
-                        return !isNaN(date.getTime()) && date >= thisYearStart
+                        const date = parseIncidentDate(d.Timestamp)
+                        return date && date >= thisYearStart
                       }).length
                       
                       const lastYear = filteredData.filter(d => {
-                        const date = new Date(d.Timestamp)
-                        return !isNaN(date.getTime()) && date >= lastYearStart && date < lastYearEnd
+                        const date = parseIncidentDate(d.Timestamp)
+                        return date && date >= lastYearStart && date < lastYearEnd
                       }).length
                       
                       const change = lastYear === 0 ? (thisYear > 0 ? 100 : 0) : ((thisYear - lastYear) / lastYear * 100)
