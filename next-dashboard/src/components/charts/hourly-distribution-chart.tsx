@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { useTheme } from 'next-themes'
 import { PlotlyWrapper } from './plotly-wrapper'
-import { getLayout, plotConfig } from '@/lib/plotly-config'
+import { getLayout, plotConfig, getResponsiveDimensions } from '@/lib/plotly-config'
 import { IncidentData } from '@/types'
 import { parseIncidentDate } from '@/utils/date-parser'
 
@@ -14,6 +14,7 @@ interface HourlyDistributionChartProps {
 export function HourlyDistributionChart({ data }: HourlyDistributionChartProps) {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
+  const responsive = getResponsiveDimensions()
 
   const chartData = useMemo(() => {
     // Extract hours from timestamps
@@ -46,6 +47,14 @@ export function HourlyDistributionChart({ data }: HourlyDistributionChartProps) 
       getLayout(isDark, {
         title: {
           text: 'Hourly Distribution of Incidents',
+          x: 0.5,
+          xanchor: 'center',
+          yanchor: 'top',
+          font: {
+            size: responsive.isMobile ? 18 : 24,
+            color: isDark ? '#f1f5f9' : '#111827',
+            weight: 'bold' as any,
+          },
         },
         xaxis: {
           title: {
@@ -60,7 +69,7 @@ export function HourlyDistributionChart({ data }: HourlyDistributionChartProps) 
           },
         },
         height: 500,
-        margin: { t: 50, b: 60, l: 60, r: 20 },
+        margin: { t: 70, b: 60, l: 60, r: 20 },
         bargap: 0.1,
       }),
     [isDark]

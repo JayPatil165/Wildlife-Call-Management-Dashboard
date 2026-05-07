@@ -25,7 +25,7 @@ export function MonthlyByTalukaChart({ data }: MonthlyByTalukaChartProps) {
         const month = date.getMonth() + 1
         const monthStr = `${year}-${month.toString().padStart(2, '0')}`
         const taluka = incident['तालुका:']
-        
+
         if (taluka) {
           const key = `${monthStr}|||${taluka}`
           acc[key] = (acc[key] || 0) + 1
@@ -85,8 +85,13 @@ export function MonthlyByTalukaChart({ data }: MonthlyByTalukaChartProps) {
       getLayout(isDark, {
         title: {
           text: 'Monthly Incidents by Taluka (All Talukas)',
+          x: 0.5,
+          xanchor: 'center',
+          yanchor: 'top',
           font: {
-            size: responsive.titleFontSize,
+            size: responsive.isMobile ? 18 : 24,
+            color: isDark ? '#f1f5f9' : '#111827',
+            weight: 'bold' as any,
           },
         },
         xaxis: {
@@ -107,11 +112,11 @@ export function MonthlyByTalukaChart({ data }: MonthlyByTalukaChartProps) {
           },
         },
         height: responsive.isMobile ? 500 : 600,
-        margin: { 
-          t: 60, 
-          b: responsive.isMobile ? 100 : 120, 
-          l: responsive.isMobile ? 50 : 70, 
-          r: responsive.isMobile ? 10 : 20 
+        margin: {
+          t: 70,
+          b: responsive.isMobile ? 100 : 120,
+          l: responsive.isMobile ? 50 : 70,
+          r: responsive.isMobile ? 10 : 20
         },
         showlegend: !responsive.isMobile,
         legend: responsive.isMobile ? {} : {

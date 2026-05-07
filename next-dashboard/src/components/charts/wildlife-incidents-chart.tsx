@@ -58,8 +58,13 @@ export function WildlifeIncidentsChart({ data }: WildlifeIncidentsChartProps) {
       getLayout(isDark, {
         title: {
           text: 'Wildlife Incidents by Species (All)',
+          x: 0.5,
+          xanchor: 'center',
+          yanchor: 'top',
           font: {
-            size: responsive.titleFontSize,
+            size: responsive.isMobile ? 18 : 24,
+            color: isDark ? '#f1f5f9' : '#111827',
+            weight: 'bold' as any,
           },
         },
         xaxis: {
@@ -78,7 +83,7 @@ export function WildlifeIncidentsChart({ data }: WildlifeIncidentsChartProps) {
           },
         },
         height: responsive.height,
-        margin: responsive.margin,
+        margin: { ...responsive.margin, t: 70 },
       }),
     [isDark, responsive]
   )

@@ -60,8 +60,13 @@ export function TalukaDistributionChart({ data }: TalukaDistributionChartProps) 
       getLayout(isDark, {
         title: {
           text: 'Incident Distribution by Taluka',
+          x: 0.5,
+          xanchor: 'center',
+          yanchor: 'top',
           font: {
-            size: responsive.titleFontSize,
+            size: responsive.isMobile ? 18 : 24,
+            color: isDark ? '#f1f5f9' : '#111827',
+            weight: 'bold' as any,
           },
         },
         height: responsive.isMobile ? 450 : 600,
@@ -76,11 +81,11 @@ export function TalukaDistributionChart({ data }: TalukaDistributionChartProps) 
             size: responsive.isMobile ? 9 : 11,
           },
         },
-        margin: { 
-          t: 60, 
-          b: responsive.isMobile ? 40 : 60, 
-          l: responsive.isMobile ? 40 : 80, 
-          r: responsive.isMobile ? 120 : 200 
+        margin: {
+          t: 70,
+          b: responsive.isMobile ? 40 : 60,
+          l: responsive.isMobile ? 40 : 80,
+          r: responsive.isMobile ? 120 : 200
         },
       }),
     [isDark, responsive]

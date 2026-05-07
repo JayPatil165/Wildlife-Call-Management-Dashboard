@@ -57,8 +57,13 @@ export function TopTalukasChart({ data }: TopTalukasChartProps) {
       getLayout(isDark, {
         title: {
           text: 'Top 10 Talukas by Incident Count',
+          x: 0.5,
+          xanchor: 'center',
+          yanchor: 'top',
           font: {
-            size: responsive.titleFontSize,
+            size: responsive.isMobile ? 18 : 24,
+            color: isDark ? '#f1f5f9' : '#111827',
+            weight: 'bold' as any,
           },
         },
         xaxis: {
@@ -78,11 +83,11 @@ export function TopTalukasChart({ data }: TopTalukasChartProps) {
           },
         },
         height: responsive.isMobile ? 400 : 500,
-        margin: { 
-          t: 60, 
-          b: responsive.isMobile ? 50 : 60, 
-          l: responsive.isMobile ? 80 : 150, 
-          r: responsive.isMobile ? 20 : 40 
+        margin: {
+          t: 70,
+          b: responsive.isMobile ? 50 : 60,
+          l: responsive.isMobile ? 80 : 150,
+          r: responsive.isMobile ? 20 : 40
         },
       }),
     [isDark, responsive]

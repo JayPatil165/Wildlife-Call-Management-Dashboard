@@ -41,11 +41,6 @@ export function ChartDisplay({ chartType, data }: ChartDisplayProps) {
   // Helper to render chart card
   const renderChart = (title: string, ChartComponent: React.ComponentType<{ data: IncidentData[] }>) => (
     <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-md">
-      <CardHeader className="p-4 md:p-6">
-        <CardTitle className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">
-          {title}
-        </CardTitle>
-      </CardHeader>
       <CardContent className="p-2 md:p-6">
         <ChartComponent data={data} />
       </CardContent>
@@ -83,12 +78,7 @@ export function ChartDisplay({ chartType, data }: ChartDisplayProps) {
   // This should never be reached as all chart types are handled
   return (
     <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-md">
-      <CardHeader>
-        <CardTitle className="text-xl font-bold text-gray-900 dark:text-white">
-          {chartTitles[chartType]}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="p-2 md:p-6">
         <div className="flex flex-col items-center justify-center py-20 px-4">
           <div className="p-6 bg-gray-100 dark:bg-slate-700/50 rounded-full mb-6">
             <Construction className="h-16 w-16 text-gray-400 dark:text-slate-500" />

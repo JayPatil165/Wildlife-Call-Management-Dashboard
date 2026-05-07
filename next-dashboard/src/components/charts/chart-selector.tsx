@@ -185,13 +185,13 @@ interface ChartSelectorProps {
 
 export function ChartSelector({ activeChart, onChartChange }: ChartSelectorProps) {
   return (
-    <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-md">
-      <CardHeader className="p-4 md:p-6">
-        <CardTitle className="text-base md:text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+    <Card className="border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm shadow-md w-full">
+      <CardHeader className="p-4 md:p-6 pb-0 text-center">
+        <CardTitle className="text-lg md:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2 justify-center">
           📊 Chart Selection
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-4 md:p-6">
+      <CardContent className="p-4 md:p-6 pt-0">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
           {chartButtons.map((chart) => (
             <Button

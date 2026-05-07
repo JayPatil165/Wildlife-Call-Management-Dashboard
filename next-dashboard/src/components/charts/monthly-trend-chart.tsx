@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { useTheme } from 'next-themes'
 import { PlotlyWrapper } from './plotly-wrapper'
-import { getLayout, plotConfig } from '@/lib/plotly-config'
+import { getLayout, plotConfig, getResponsiveDimensions } from '@/lib/plotly-config'
 import { IncidentData } from '@/types'
 import { parseIncidentDate } from '@/utils/date-parser'
 
@@ -14,6 +14,7 @@ interface MonthlyTrendChartProps {
 export function MonthlyTrendChart({ data }: MonthlyTrendChartProps) {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
+  const responsive = getResponsiveDimensions()
 
   const chartData = useMemo(() => {
     // Group by month
@@ -63,6 +64,14 @@ export function MonthlyTrendChart({ data }: MonthlyTrendChartProps) {
       getLayout(isDark, {
         title: {
           text: 'Monthly Incident Trend',
+          x: 0.5,
+          xanchor: 'center',
+          yanchor: 'top',
+          font: {
+            size: responsive.isMobile ? 18 : 24,
+            color: isDark ? '#f1f5f9' : '#111827',
+            weight: 'bold' as any,
+          },
         },
         xaxis: {
           title: {
@@ -77,7 +86,7 @@ export function MonthlyTrendChart({ data }: MonthlyTrendChartProps) {
           },
         },
         height: 500,
-        margin: { t: 50, b: 100, l: 60, r: 20 },
+        margin: { t: 70, b: 100, l: 60, r: 20 },
       }),
     [isDark]
   )

@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import type { Region } from '@/lib/config'
 
 export function useRegion() {
@@ -43,7 +43,7 @@ export function useRegionPersistence() {
   const [region, setRegion] = useState<Region | null>(null)
 
   // Load saved region on mount
-  useState(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('selected-region') as Region | null
       if (saved && (saved === 'sangli' || saved === 'kolhapur')) {

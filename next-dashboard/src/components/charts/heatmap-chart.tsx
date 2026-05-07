@@ -20,7 +20,7 @@ export function HeatmapChart({ data }: HeatmapChartProps) {
     const grouped = data.reduce((acc, incident) => {
       const taluka = incident['तालुका:']
       const wildlife = incident['कोणत्या वन्यप्राण्याची नोंद करू इच्छिता:']
-      
+
       if (taluka && wildlife) {
         const key = `${taluka}|||${wildlife}`
         acc[key] = (acc[key] || 0) + 1
@@ -54,7 +54,7 @@ export function HeatmapChart({ data }: HeatmapChartProps) {
       .map(([w]) => w)
 
     // Create the z-matrix (2D array) for the heatmap
-    const zMatrix = talukas.map(taluka => 
+    const zMatrix = talukas.map(taluka =>
       wildlifeTypes.map(wildlife => {
         const key = `${taluka}|||${wildlife}`
         return grouped[key] || 0
@@ -107,8 +107,13 @@ export function HeatmapChart({ data }: HeatmapChartProps) {
       getLayout(isDark, {
         title: {
           text: 'Incident Heatmap: Taluka vs Wildlife Type',
+          x: 0.5,
+          xanchor: 'center',
+          yanchor: 'top',
           font: {
-            size: responsive.titleFontSize,
+            size: responsive.isMobile ? 18 : 24,
+            color: isDark ? '#f1f5f9' : '#111827',
+            weight: 'bold' as any,
           },
         },
         xaxis: {
@@ -132,11 +137,11 @@ export function HeatmapChart({ data }: HeatmapChartProps) {
           },
         },
         height: responsive.height + 100,
-        margin: { 
-          t: 50, 
-          b: responsive.isMobile ? 80 : 120, 
-          l: responsive.isMobile ? 80 : 120, 
-          r: responsive.isMobile ? 40 : 80 
+        margin: {
+          t: 70,
+          b: responsive.isMobile ? 80 : 120,
+          l: responsive.isMobile ? 80 : 120,
+          r: responsive.isMobile ? 40 : 80
         },
       }),
     [isDark, responsive]

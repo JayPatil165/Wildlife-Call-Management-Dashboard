@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { useTheme } from 'next-themes'
 import { PlotlyWrapper } from './plotly-wrapper'
-import { getLayout, plotConfig, colorPalette } from '@/lib/plotly-config'
+import { getLayout, plotConfig, colorPalette, getResponsiveDimensions } from '@/lib/plotly-config'
 import { IncidentData } from '@/types'
 
 interface IncidentTypesChartProps {
@@ -13,6 +13,7 @@ interface IncidentTypesChartProps {
 export function IncidentTypesChart({ data }: IncidentTypesChartProps) {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
+  const responsive = getResponsiveDimensions()
 
   const chartData = useMemo(() => {
     // Group by wildlife and incident type
@@ -56,6 +57,14 @@ export function IncidentTypesChart({ data }: IncidentTypesChartProps) {
       getLayout(isDark, {
         title: {
           text: 'Incident Types by Wildlife Species',
+          x: 0.5,
+          xanchor: 'center',
+          yanchor: 'top',
+          font: {
+            size: responsive.isMobile ? 18 : 24,
+            color: isDark ? '#f1f5f9' : '#111827',
+            weight: 'bold' as any,
+          },
         },
         xaxis: {
           title: {
@@ -71,7 +80,7 @@ export function IncidentTypesChart({ data }: IncidentTypesChartProps) {
         },
         barmode: 'group',
         height: 500,
-        margin: { t: 50, b: 150, l: 60, r: 20 },
+        margin: { t: 70, b: 150, l: 60, r: 20 },
         showlegend: true,
         legend: {
           orientation: 'h',
